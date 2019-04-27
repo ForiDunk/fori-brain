@@ -35,7 +35,7 @@ class Register extends Component {
     })
       .then(response => response.json())
       .then(user => {
-        if (user) {
+        if (user.id) {
           this.props.loadUser(user);
           this.props.onRouteChange('home');
         }
@@ -101,8 +101,7 @@ class Register extends Component {
             <div className="lh-copy mt3">
               <p
                 onClick={() => onRouteChange('signin')}
-                className="f6 link dim black db pointer"
-              >
+                className="f6 link dim black db pointer">
                 Sign In
               </p>
             </div>
