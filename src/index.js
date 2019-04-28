@@ -9,8 +9,13 @@ import * as serviceWorker from './serviceWorker';
 import 'tachyons';
 import userReducer from './store/reducers/userReducer';
 import faceRecognitionReducer from './store/reducers/faceRecognitionReducer';
+import navigationReducer from './store/reducers/navigationReducer';
 
-const rootReducer = combineReducers({ userReducer, faceRecognitionReducer });
+const rootReducer = combineReducers({
+  userReducer,
+  faceRecognitionReducer,
+  navigationReducer,
+});
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(

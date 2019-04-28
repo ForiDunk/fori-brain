@@ -31,3 +31,9 @@ export const register = (email, password, name) => dispatch => {
       dispatch({ type: constants.USER_REGISTER_FAIL, payload: error }),
     );
 };
+
+export const signOut = () => {
+  return {
+    type: constants.USER_SIGN_OUT,
+  };
+};

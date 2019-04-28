@@ -34,7 +34,6 @@ const initialState = {
   input: '',
   imageUrl: '',
   box: {},
-  route: 'signin',
 };
 
 class App extends Component {
@@ -96,29 +95,17 @@ class App extends Component {
       .catch(console.log);
   };
 
-  onRouteChange = route => {
-    if (route === 'signout') {
-      this.setState(initialState);
-    }
-    this.setState({ route: route });
-  };
-
   render() {
-    const { imageUrl, route, box } = this.state;
+    const { imageUrl, box } = this.state;
+    const { isSignedIn, route, user } = this.props;
     return (
       <div className="App">
         <Particles className="particles" params={particlesOptions} />
-        <Navigation
-          isSignedIn={this.props.isSignedIn}
-          onRouteChange={this.onRouteChange}
-        />
-        {this.props.isSignedIn ? (
+        <Navigation isSignedIn={isSignedIn} />
+        {isSignedIn ? (
           <div>
             <Logo />
-            <Rank
-              name={this.props.user.name}
-              entries={this.props.user.entries}
-            />
+            <Rank name={user.name} entries={user.entries} />
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
@@ -126,9 +113,9 @@ class App extends Component {
             <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>
         ) : route === 'signin' ? (
-          <Signin onRouteChange={this.onRouteChange} />
+          <Signin />
         ) : (
-          <Register onRouteChange={this.onRouteChange} />
+          <Register />
         )}
       </div>
     );
@@ -138,7 +125,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     user: state.userReducer.user,
-    isSignedIn: state.userReducer.isSignedIn,
+    isSignedIn: state.navigationReducer.isSignedIn,
+    route: state.navigationReducer.route,
   };
 };
 

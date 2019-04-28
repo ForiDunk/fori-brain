@@ -1,12 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { navTo } from '../../store/actions/navigationActions';
+import { signOut } from '../../store/actions/userActions';
 import './Navigation.css';
 
-const Navigation = ({ onRouteChange, isSignedIn }) => {
+const Navigation = ({ isSignedIn, navTo, signOut }) => {
   if (isSignedIn) {
     return (
       <nav className="Navigation">
         <p
-          onClick={() => onRouteChange('signout')}
+          onClick={signOut}
           className="f3 link dim black underline pa3 pointer">
           Sign Out
         </p>
@@ -16,12 +19,12 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
     return (
       <nav className="Navigation">
         <p
-          onClick={() => onRouteChange('signin')}
+          onClick={() => navTo('signin')}
           className="f3 link dim black underline pa3 pointer">
           Sign In
         </p>
         <p
-          onClick={() => onRouteChange('register')}
+          onClick={() => navTo('register')}
           className="f3 link dim black underline pa3 pointer">
           Register
         </p>
@@ -30,4 +33,20 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
   }
 };
 
-export default Navigation;
+const mapStateToProps = state => {
+  return {
+    isSignedIn: state.navigationReducer.isSignedIn,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    navTo: route => dispatch(navTo(route)),
+    signOut: () => dispatch(signOut()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Navigation);

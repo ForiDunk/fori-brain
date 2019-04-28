@@ -1,7 +1,6 @@
 import * as constants from '../constants/userConstants';
 
 const initialState = {
-  isSignedIn: false,
   user: {
     id: '',
     name: '',
@@ -17,7 +16,6 @@ const userReducer = (state = initialState, action) => {
     case constants.USER_SIGNIN_SUCCESS:
       return {
         ...state,
-        isSignedIn: true,
         user: {
           ...action.payload,
         },
@@ -30,7 +28,6 @@ const userReducer = (state = initialState, action) => {
     case constants.USER_REGISTER_SUCCESS:
       return {
         ...state,
-        isSignedIn: true,
         user: {
           ...action.payload,
         },
@@ -39,6 +36,10 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         error: true,
+      };
+    case constants.USER_SIGN_OUT:
+      return {
+        ...initialState,
       };
     default:
       return state;
