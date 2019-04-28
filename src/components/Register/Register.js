@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { register } from '../../store/actions/userActions';
 import './Register.css';
 
 class Register extends Component {
@@ -24,22 +26,8 @@ class Register extends Component {
   };
 
   onSubmitSignIn = () => {
-    fetch('https://fierce-woodland-79565.herokuapp.com/register', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name,
-      }),
-    })
-      .then(response => response.json())
-      .then(user => {
-        if (user.id) {
-          this.props.loadUser(user);
-          this.props.onRouteChange('home');
-        }
-      });
+    const { email, password, name } = this.state;
+    this.props.register(email, password, name);
   };
 
   render() {
@@ -112,4 +100,14 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapDispatchToProps = dispatch => {
+  return {
+    register: (email, password, name) =>
+      dispatch(register(email, password, name)),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Register);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
@@ -34,33 +35,13 @@ const initialState = {
   imageUrl: '',
   box: {},
   route: 'signin',
-  isSignedIn: false,
-  user: {
-    id: '',
-    name: '',
-    email: '',
-    entries: 0,
-    joined: '',
-  },
 };
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = initialState;
   }
-
-  loadUser = data => {
-    this.setState({
-      user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joined: data.joined,
-      },
-    });
-  };
 
   calculateFaceLocation = data => {
     // TODO: make this to work with multiple faces
@@ -118,27 +99,25 @@ class App extends Component {
   onRouteChange = route => {
     if (route === 'signout') {
       this.setState(initialState);
-    } else if (route === 'home') {
-      this.setState({ isSignedIn: true });
     }
     this.setState({ route: route });
   };
 
   render() {
-    const { isSignedIn, imageUrl, route, box } = this.state;
+    const { imageUrl, route, box } = this.state;
     return (
       <div className="App">
         <Particles className="particles" params={particlesOptions} />
         <Navigation
-          isSignedIn={isSignedIn}
+          isSignedIn={this.props.isSignedIn}
           onRouteChange={this.onRouteChange}
         />
-        {route === 'home' ? (
+        {this.props.isSignedIn ? (
           <div>
             <Logo />
             <Rank
-              name={this.state.user.name}
-              entries={this.state.user.entries}
+              name={this.props.user.name}
+              entries={this.props.user.entries}
             />
             <ImageLinkForm
               onInputChange={this.onInputChange}
@@ -147,16 +126,23 @@ class App extends Component {
             <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>
         ) : route === 'signin' ? (
-          <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          <Signin onRouteChange={this.onRouteChange} />
         ) : (
-          <Register
-            loadUser={this.loadUser}
-            onRouteChange={this.onRouteChange}
-          />
+          <Register onRouteChange={this.onRouteChange} />
         )}
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    user: state.userReducer.user,
+    isSignedIn: state.userReducer.isSignedIn,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(App);

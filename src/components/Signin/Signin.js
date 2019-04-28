@@ -1,38 +1,27 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signIn } from '../../store/actions/userActions';
 import './Signin.css';
 
 class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      signInEmail: '',
-      signInPassword: '',
+      email: '',
+      password: '',
     };
   }
   onEmailChange = event => {
-    this.setState({ signInEmail: event.target.value });
+    this.setState({ email: event.target.value });
   };
 
   onPasswordChange = event => {
-    this.setState({ signInPassword: event.target.value });
+    this.setState({ password: event.target.value });
   };
 
   onSubmitSignIn = () => {
-    fetch('https://fierce-woodland-79565.herokuapp.com/signin', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: this.state.signInEmail,
-        password: this.state.signInPassword,
-      }),
-    })
-      .then(response => response.json())
-      .then(user => {
-        if (user.id) {
-          this.props.loadUser(user);
-          this.props.onRouteChange('home');
-        }
-      });
+    const { email, password } = this.state;
+    this.props.signIn(email, password);
   };
 
   render() {
@@ -52,7 +41,7 @@ class Signin extends Component {
                   type="email"
                   name="email-address"
                   id="email-address"
-                  value={this.state.signInEmail}
+                  value={this.state.email}
                   onChange={this.onEmailChange}
                 />
               </div>
@@ -65,7 +54,7 @@ class Signin extends Component {
                   type="password"
                   name="password"
                   id="password"
-                  value={this.state.signInPassword}
+                  value={this.state.password}
                   onChange={this.onPasswordChange}
                 />
               </div>
@@ -91,5 +80,13 @@ class Signin extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    signIn: (email, password) => dispatch(signIn(email, password)),
+  };
+};
 
-export default Signin;
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Signin);
