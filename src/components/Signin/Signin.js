@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../store/actions/userActions';
+import { navTo } from '../../store/actions/navigationActions';
 import './Signin.css';
 
 class Signin extends Component {
@@ -25,7 +26,7 @@ class Signin extends Component {
   };
 
   render() {
-    const { onRouteChange } = this.props;
+    const { navTo } = this.props;
     return (
       <article className="Signin br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
@@ -69,7 +70,7 @@ class Signin extends Component {
             </div>
             <div className="lh-copy mt3">
               <p
-                onClick={() => onRouteChange('register')}
+                onClick={() => navTo('register')}
                 className="f6 link dim black db pointer">
                 Register
               </p>
@@ -83,6 +84,7 @@ class Signin extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     signIn: (email, password) => dispatch(signIn(email, password)),
+    navTo: route => dispatch(navTo(route)),
   };
 };
 

@@ -8,12 +8,14 @@ export const signIn = (email, password) => dispatch => {
     body: JSON.stringify({ email, password }),
   })
     .then(response => response.json())
-    .then(user =>
-      dispatch({ type: constants.USER_SIGNIN_SUCCESS, payload: user }),
-    )
-    .catch(error =>
-      dispatch({ type: constants.USER_SIGNIN_FAIL, payload: error }),
-    );
+    .then(user => {
+      if (user.id) {
+        return dispatch({ type: constants.USER_SIGNIN_SUCCESS, payload: user });
+      } else {
+        return dispatch({ type: constants.USER_SIGNIN_FAIL });
+      }
+    })
+    .catch(error => dispatch({ type: constants.USER_SIGNIN_FAIL }));
 };
 
 export const register = (email, password, name) => dispatch => {
@@ -24,12 +26,17 @@ export const register = (email, password, name) => dispatch => {
     body: JSON.stringify({ email, password, name }),
   })
     .then(response => response.json())
-    .then(user =>
-      dispatch({ type: constants.USER_REGISTER_SUCCESS, payload: user }),
-    )
-    .catch(error =>
-      dispatch({ type: constants.USER_REGISTER_FAIL, payload: error }),
-    );
+    .then(user => {
+      if (user.id) {
+        return dispatch({
+          type: constants.USER_REGISTER_SUCCESS,
+          payload: user,
+        });
+      } else {
+        return dispatch({ type: constants.USER_REGISTER_FAIL });
+      }
+    })
+    .catch(error => dispatch({ type: constants.USER_REGISTER_FAIL }));
 };
 
 export const signOut = () => {

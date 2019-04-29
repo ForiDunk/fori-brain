@@ -14,17 +14,6 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case constants.USER_SIGNIN_SUCCESS:
-      return {
-        ...state,
-        user: {
-          ...action.payload,
-        },
-      };
-    case constants.USER_SIGNIN_FAIL:
-      return {
-        ...state,
-        error: true,
-      };
     case constants.USER_REGISTER_SUCCESS:
       return {
         ...state,
@@ -32,6 +21,7 @@ const userReducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
+    case constants.USER_SIGNIN_FAIL:
     case constants.USER_REGISTER_FAIL:
       return {
         ...state,

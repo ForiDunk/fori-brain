@@ -1,5 +1,9 @@
 import * as constants from '../constants/navigationConstants';
-import { USER_SIGNIN_SUCCESS, USER_SIGN_OUT } from '../constants/userConstants';
+import {
+  USER_SIGNIN_SUCCESS,
+  USER_SIGN_OUT,
+  USER_REGISTER_SUCCESS,
+} from '../constants/userConstants';
 
 const initialState = {
   isSignedIn: false,
@@ -9,6 +13,7 @@ const initialState = {
 const navigationReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_SIGNIN_SUCCESS:
+    case USER_REGISTER_SUCCESS:
       return {
         isSignedIn: true,
         route: 'home',
