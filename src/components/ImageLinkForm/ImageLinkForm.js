@@ -31,7 +31,6 @@ const ImageLinkForm = ({ frInputChange, frInit, input, userId }) => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     input: state.faceRecognitionReducer.input,
     userId: state.userReducer.user.id,
