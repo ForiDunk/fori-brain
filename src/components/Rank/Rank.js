@@ -1,12 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Rank = ({ name, entries }) => {
+const Rank = ({ user }) => {
   return (
     <div>
-      <div className="white f3">{`${name}, your current entry count is...`}</div>
-      <div className="white f1 ">{entries}</div>
+      <div className="white f3">{`${
+        user.name
+      }, your current entry count is...`}</div>
+      <div className="white f1 ">{user.entries}</div>
     </div>
   );
 };
 
-export default Rank;
+const mapStateToProps = state => {
+  return {
+    user: state.userReducer.user,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(Rank);

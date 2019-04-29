@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { register } from '../../store/actions/userActions';
+import { navTo } from '../../store/actions/navigationActions';
 import './Register.css';
 
 class Register extends Component {
@@ -24,26 +27,12 @@ class Register extends Component {
   };
 
   onSubmitSignIn = () => {
-    fetch('https://fierce-woodland-79565.herokuapp.com/register', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name,
-      }),
-    })
-      .then(response => response.json())
-      .then(user => {
-        if (user.id) {
-          this.props.loadUser(user);
-          this.props.onRouteChange('home');
-        }
-      });
+    const { email, password, name } = this.state;
+    this.props.register(email, password, name);
   };
 
   render() {
-    const { onRouteChange } = this.props;
+    const { navTo } = this.props;
     return (
       <article className="Register br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
@@ -100,7 +89,7 @@ class Register extends Component {
             </div>
             <div className="lh-copy mt3">
               <p
-                onClick={() => onRouteChange('signin')}
+                onClick={() => navTo('signin')}
                 className="f6 link dim black db pointer">
                 Sign In
               </p>
@@ -112,4 +101,15 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapDispatchToProps = dispatch => {
+  return {
+    register: (email, password, name) =>
+      dispatch(register(email, password, name)),
+    navTo: route => dispatch(navTo(route)),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Register);
