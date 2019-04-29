@@ -41,6 +41,14 @@ const userReducer = (state = initialState, action) => {
       return {
         ...initialState,
       };
+    case constants.USER_UPDATE_COUNT:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          entries: action.payload,
+        },
+      };
     default:
       return state;
   }
