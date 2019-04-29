@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './FaceRecognition.css';
 
 const FaceRecognition = ({ imageUrl, box }) => {
@@ -20,4 +21,14 @@ const FaceRecognition = ({ imageUrl, box }) => {
   );
 };
 
-export default FaceRecognition;
+const mapStateToProps = state => {
+  return {
+    box: state.faceRecognitionReducer.box,
+    imageUrl: state.faceRecognitionReducer.imageUrl,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(FaceRecognition);

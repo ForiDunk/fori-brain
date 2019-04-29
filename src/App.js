@@ -30,16 +30,16 @@ const particlesOptions = {
   },
 };
 
-const App = ({ isSignedIn, route, user, box, imageUrl }) => (
+const App = ({ isSignedIn, route }) => (
   <div className="App">
     <Particles className="particles" params={particlesOptions} />
-    <Navigation isSignedIn={isSignedIn} />
+    <Navigation />
     {isSignedIn ? (
       <div>
         <Logo />
-        <Rank name={user.name} entries={user.entries} />
+        <Rank />
         <ImageLinkForm />
-        <FaceRecognition box={box} imageUrl={imageUrl} />
+        <FaceRecognition />
       </div>
     ) : route === 'signin' ? (
       <Signin />
@@ -51,11 +51,8 @@ const App = ({ isSignedIn, route, user, box, imageUrl }) => (
 
 const mapStateToProps = state => {
   return {
-    user: state.userReducer.user,
     isSignedIn: state.navigationReducer.isSignedIn,
     route: state.navigationReducer.route,
-    box: state.faceRecognitionReducer.box,
-    imageUrl: state.faceRecognitionReducer.imageUrl,
   };
 };
 
