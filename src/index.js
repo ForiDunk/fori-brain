@@ -4,24 +4,25 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'tachyons';
 import userReducer from './store/reducers/userReducer';
 import faceRecognitionReducer from './store/reducers/faceRecognitionReducer';
-import navigationReducer from './store/reducers/navigationReducer';
 
 const rootReducer = combineReducers({
   userReducer,
   faceRecognitionReducer,
-  navigationReducer,
 });
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Router>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Router>,
   document.getElementById('root'),
 );
 

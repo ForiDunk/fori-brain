@@ -8,6 +8,7 @@ const initialState = {
     entries: 0,
     joined: '',
   },
+  isSignedIn: false,
   error: false,
 };
 
@@ -20,6 +21,7 @@ const userReducer = (state = initialState, action) => {
         user: {
           ...action.payload,
         },
+        isSignedIn: true,
       };
     case constants.USER_SIGNIN_FAIL:
     case constants.USER_REGISTER_FAIL:

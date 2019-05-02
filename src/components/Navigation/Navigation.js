@@ -1,33 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { navTo } from '../../store/actions/navigationActions';
+import { Link } from 'react-router-dom';
 import { signOut } from '../../store/actions/userActions';
 import './Navigation.css';
 
-const Navigation = ({ isSignedIn, navTo, signOut }) => {
+const Navigation = ({ isSignedIn, signOut }) => {
   if (isSignedIn) {
     return (
       <nav className="Navigation">
-        <p
+        <Link
+          to="/signin"
           onClick={signOut}
           className="f3 link dim black underline pa3 pointer">
           Sign Out
-        </p>
+        </Link>
       </nav>
     );
   } else {
     return (
       <nav className="Navigation">
-        <p
-          onClick={() => navTo('signin')}
-          className="f3 link dim black underline pa3 pointer">
+        <Link to="/signin" className="f3 link dim black underline pa3 pointer">
           Sign In
-        </p>
-        <p
-          onClick={() => navTo('register')}
+        </Link>
+        <Link
+          to="/register"
           className="f3 link dim black underline pa3 pointer">
           Register
-        </p>
+        </Link>
       </nav>
     );
   }
@@ -35,13 +34,12 @@ const Navigation = ({ isSignedIn, navTo, signOut }) => {
 
 const mapStateToProps = state => {
   return {
-    isSignedIn: state.navigationReducer.isSignedIn,
+    isSignedIn: state.userReducer.isSignedIn,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    navTo: route => dispatch(navTo(route)),
     signOut: () => dispatch(signOut()),
   };
 };
