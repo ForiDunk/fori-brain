@@ -1,4 +1,5 @@
 import * as constants from '../constants/userConstants';
+import { history } from '../../index';
 
 export const signIn = (email, password) => dispatch => {
   dispatch({ type: constants.USER_SIGNIN_PENDING });
@@ -10,7 +11,8 @@ export const signIn = (email, password) => dispatch => {
     .then(response => response.json())
     .then(user => {
       if (user.id) {
-        return dispatch({ type: constants.USER_SIGNIN_SUCCESS, payload: user });
+        dispatch({ type: constants.USER_SIGNIN_SUCCESS, payload: user });
+        return history.push('/');
       } else {
         return dispatch({ type: constants.USER_SIGNIN_FAIL });
       }
@@ -28,10 +30,11 @@ export const register = (email, password, name) => dispatch => {
     .then(response => response.json())
     .then(user => {
       if (user.id) {
-        return dispatch({
+        dispatch({
           type: constants.USER_REGISTER_SUCCESS,
           payload: user,
         });
+        return history.push('/');
       } else {
         return dispatch({ type: constants.USER_REGISTER_FAIL });
       }

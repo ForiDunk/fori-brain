@@ -4,7 +4,8 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'tachyons';
@@ -16,9 +17,10 @@ const rootReducer = combineReducers({
   faceRecognitionReducer,
 });
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+export const history = createBrowserHistory();
 
 ReactDOM.render(
-  <Router>
+  <Router history={history}>
     <Provider store={store}>
       <App />
     </Provider>

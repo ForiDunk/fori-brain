@@ -5,7 +5,6 @@ import Navigation from './components/Navigation/Navigation';
 import Home from './components/Home/Home';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
-import AuthRoute from './auth/AuthRoute';
 import './App.css';
 
 const particlesOptions = {
@@ -33,9 +32,7 @@ const App = () => (
     <Particles className="particles" params={particlesOptions} />
     <Navigation />
     <Switch>
-      {/* <Route exact path="/" component={Home} /> */}
-      {/* <Redirect exact from="/" to="/signin" /> */}
-      <AuthRoute exact path="/" component={Home} />
+      <Route exact path="/" component={Home} />
       <Route path="/signin" component={Signin} />
       <Route path="/register" component={Register} />
     </Switch>
