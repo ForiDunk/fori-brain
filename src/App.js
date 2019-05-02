@@ -1,13 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
-import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import Home from './components/Home/Home';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
-import Rank from './components/Rank/Rank';
 import './App.css';
 
 const particlesOptions = {
@@ -30,33 +27,16 @@ const particlesOptions = {
   },
 };
 
-const App = ({ isSignedIn, route }) => (
+const App = () => (
   <div className="App">
     <Particles className="particles" params={particlesOptions} />
     <Navigation />
-    {isSignedIn ? (
-      <div>
-        <Logo />
-        <Rank />
-        <ImageLinkForm />
-        <FaceRecognition />
-      </div>
-    ) : route === 'signin' ? (
-      <Signin />
-    ) : (
-      <Register />
-    )}
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/signin" component={Signin} />
+      <Route path="/register" component={Register} />
+    </Switch>
   </div>
 );
 
-const mapStateToProps = state => {
-  return {
-    isSignedIn: state.navigationReducer.isSignedIn,
-    route: state.navigationReducer.route,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  null,
-)(App);
+export default App;

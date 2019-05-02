@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { register } from '../../store/actions/userActions';
-import { navTo } from '../../store/actions/navigationActions';
 import './Register.css';
 
 class Register extends Component {
@@ -32,7 +32,6 @@ class Register extends Component {
   };
 
   render() {
-    const { navTo } = this.props;
     return (
       <article className="Register br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
@@ -88,11 +87,9 @@ class Register extends Component {
               />
             </div>
             <div className="lh-copy mt3">
-              <p
-                onClick={() => navTo('signin')}
-                className="f6 link dim black db pointer">
+              <Link to="/signin" className="f6 link dim black db pointer">
                 Sign In
-              </p>
+              </Link>
             </div>
           </div>
         </main>
@@ -105,7 +102,6 @@ const mapDispatchToProps = dispatch => {
   return {
     register: (email, password, name) =>
       dispatch(register(email, password, name)),
-    navTo: route => dispatch(navTo(route)),
   };
 };
 
