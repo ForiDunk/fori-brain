@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signIn } from '../../store/actions/userActions';
 import './Signin.css';
+import ToggleEye from '../ToggleEye/ToggleEye';
 
 class Signin extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class Signin extends Component {
     this.state = {
       email: '',
       password: '',
+      toggle: false,
     };
   }
   onEmailChange = event => {
@@ -23,6 +25,13 @@ class Signin extends Component {
   onSubmitSignIn = () => {
     const { email, password } = this.state;
     this.props.signIn(email, password);
+  };
+
+  togglePassword = () => {
+    //eslint-disable-next-line
+    this.setState(prev => ({ toggle: !prev.toggle }));
+    const passInput = document.querySelector('#password');
+    passInput.type = passInput.type === 'text' ? 'password' : 'text';
   };
 
   render() {
@@ -57,6 +66,11 @@ class Signin extends Component {
                   value={this.state.password}
                   onChange={this.onPasswordChange}
                 />
+                <div
+                  style={{ cursor: 'pointer' }}
+                  onClick={this.togglePassword}>
+                  <ToggleEye open={this.state.toggle} />
+                </div>
               </div>
             </fieldset>
             <div className="">
