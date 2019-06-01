@@ -67,7 +67,7 @@ class Signin extends Component {
                   onChange={this.onPasswordChange}
                 />
                 <div
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: 'pointer', display: 'inline' }}
                   onClick={this.togglePassword}>
                   <ToggleEye open={this.state.toggle} />
                 </div>
