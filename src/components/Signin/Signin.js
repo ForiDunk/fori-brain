@@ -11,7 +11,7 @@ class Signin extends Component {
     this.state = {
       email: '',
       password: '',
-      toggle: false,
+      toggle: true,
     };
   }
   onEmailChange = event => {
