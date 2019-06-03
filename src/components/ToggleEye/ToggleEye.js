@@ -9,6 +9,6 @@ const defStyles = {
 
 export default function ToggleEye({ open }) {
   return (
-    <>{open ? <EOpen style={defStyles} /> : <ECrossed style={defStyles} />}</>
+    <>{!open ? <EOpen style={defStyles} /> : <ECrossed style={defStyles} />}</>
   );
 }
